@@ -10,60 +10,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Plantes {
-    id                  String      @id @default(uuid())
-    name                String      @unique
-    description         String
-    utilisation         String
-    difficultyLevel     String      
-    create_at           DateTime    @default(now())
-    updated_at          DateTime    @updatedAt
-}
-
-model Customers {
-    id                  String      @id @default(uuid())
-    name                String
-    email               String      @unique
+model Customer {
+    id                  String              @id @default(uuid())
+    email               String              @unique
+    name                String?
+    plante              Plante[]
+    articles            Article[]
+    profile             Profile?
     reset_password      ResetPassword?
 }
 
-model ResetPassword {
-    id                  String      @id @default(uuid())
-    customer_id         String      @unique
-    customer            Customers   @relation(fields: [customer_id], references: [id])
-    create_at           DateTime    @default(now())
+model Profile {
+    id                  String              @id @default(uuid())
+    bio                 String
+    customer            Customer            @relation(fields: [customerId], references: [id])
+    customerId          String              @unique
 }
 
-model Articles {
-    id                  String      @id @default(uuid())
-    name                String      @unique
-    create_at           DateTime    @default(now())
-    updated_at          DateTime    @updatedAt
+model Plante {
+    id                  String              @id @default(uuid())
+    title               String              @unique
+    author              Customer            @relation(fields: [authorId], references: [id])
+    authorId            String
+    categoriesPlante    CategoryPlante[]            
+    description         String?
+    utilisation         String?
+    difficultyLevel     String?
+    create_at           DateTime            @default(now())
+    updated_at          DateTime            @updatedAt
+}
 
+model CategoryPlante {
+    id                  String              @id @default(uuid())
+    name                String
+    category            Plante?             @relation(fields: [categoryId], references: [id]) 
+    categoryId          String          
+}
+
+model Article {
+    id                  String              @id @default(uuid())
+    title               String      
+    published           Boolean             @default(false)
+    author              Customer            @relation(fields: [authorId], references: [id])
+    authorId            String
+    create_at           DateTime            @default(now())
+    updated_at          DateTime            @updatedAt
 }
 
 model Blog {
-    id                  String      @id @default(uuid())
-    name                String      @unique
-    create_at           DateTime    @default(now())
-    updated_at          DateTime    @updatedAt
+    id                  String              @id @default(uuid())
+    name                String              @unique
+    create_at           DateTime            @default(now())
+    updated_at          DateTime            @updatedAt
 
 }
 
 model CategoriesArticle {
-    id                  String      @id @default(uuid())
-    name                String      @unique
-    create_at           DateTime    @default(now())
-    updated_at          DateTime    @updatedAt
-
+    id                  String              @id @default(uuid())
+    name                String              @unique
+    create_at           DateTime            @default(now())
+    updated_at          DateTime            @updatedAt
 }
 
 model CategoriesBlog {
-    id                  String      @id @default(uuid())
-    name                String      @unique
-    create_at           DateTime    @default(now())
-    updated_at          DateTime    @updatedAt
+    id                  String              @id @default(uuid())
+    name                String              @unique
+    create_at           DateTime            @default(now())
+    updated_at          DateTime            @updatedAt
+}
 
+model ResetPassword {
+    id                  String              @id @default(uuid())
+    customer            Customer            @relation(fields: [customerId], references: [id])
+    customerId          String              @unique
+    create_at           DateTime            @default(now())
 }
 
 
