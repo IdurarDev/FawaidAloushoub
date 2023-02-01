@@ -9,3 +9,61 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Plantes {
+    id                  String      @id @default(uuid())
+    name                String      @unique
+    description         String
+    utilisation         String
+    difficultyLevel     String      
+    create_at           DateTime    @default(now())
+    updated_at          DateTime    @updatedAt
+}
+
+model Customers {
+    id                  String      @id @default(uuid())
+    name                String
+    email               String      @unique
+    reset_password      ResetPassword?
+}
+
+model ResetPassword {
+    id                  String      @id @default(uuid())
+    customer_id         String      @unique
+    customer            Customers   @relation(fields: [customer_id], references: [id])
+    create_at           DateTime    @default(now())
+}
+
+model Articles {
+    id                  String      @id @default(uuid())
+    name                String      @unique
+    create_at           DateTime    @default(now())
+    updated_at          DateTime    @updatedAt
+
+}
+
+model Blog {
+    id                  String      @id @default(uuid())
+    name                String      @unique
+    create_at           DateTime    @default(now())
+    updated_at          DateTime    @updatedAt
+
+}
+
+model CategoriesArticle {
+    id                  String      @id @default(uuid())
+    name                String      @unique
+    create_at           DateTime    @default(now())
+    updated_at          DateTime    @updatedAt
+
+}
+
+model CategoriesBlog {
+    id                  String      @id @default(uuid())
+    name                String      @unique
+    create_at           DateTime    @default(now())
+    updated_at          DateTime    @updatedAt
+
+}
+
+
