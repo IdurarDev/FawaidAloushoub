@@ -13,6 +13,11 @@ app.post('/blog', async (req, res) => {
     res.json(blog);
 })
 
+app.get('/', async (req, res) => {
+    const blog = await prisma.blog.findMany()
+    res.json(blog)
+})
+
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);
 })
