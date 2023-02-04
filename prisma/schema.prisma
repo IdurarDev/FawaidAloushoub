@@ -11,29 +11,29 @@ datasource db {
 }
 
 model Customer {
-    id             String         @id @default(uuid())
-    email          String         @unique
-    name           String?
-    plante         Plante[]
-    articles       Article[]
-    profile        Profile?
-    reset_password ResetPassword?
+    id   String  @id @default(uuid())
+    name String?
 }
 
 model Profile {
-    id         String   @id @default(uuid())
-    bio        String
-    customer   Customer @relation(fields: [customerId], references: [id])
-    customerId String   @unique
+    id             String         @id @default(uuid())
+    email          String         @unique
+    name           String?
+    bio            String
+    plante         Plante[]
+    articles       Article[]
+    blog           Blog[]
+    blogId         String
+    reset_password ResetPassword?
 }
 
 model Plante {
     id               String           @id @default(uuid())
     title            String           @unique
-    author           Customer         @relation(fields: [authorId], references: [id])
+    body             String
+    author           Profile          @relation(fields: [authorId], references: [id])
     authorId         String
     categoriesPlante CategoryPlante[]
-    description      String?
     utilisation      String?
     difficultyLevel  String?
     create_at        DateTime         @default(now())
@@ -50,12 +50,13 @@ model CategoryPlante {
 model Article {
     id         String    @id @default(uuid())
     title      String
+    body       String
     published  Boolean   @default(false)
-    author     Customer  @relation(fields: [authorId], references: [id])
+    comments   Comment[]
+    author     Profile   @relation(fields: [authorId], references: [id])
     authorId   String
     create_at  DateTime  @default(now())
     updated_at DateTime  @updatedAt
-    Comment    Comment[]
 }
 
 model Blog {
@@ -63,7 +64,9 @@ model Blog {
     name       String    @unique
     create_at  DateTime  @default(now())
     updated_at DateTime  @updatedAt
-    Comment    Comment[]
+    comments   Comment[]
+    Profile    Profile   @relation(fields: [profileId], references: [id])
+    profileId  String
 }
 
 model Comment {
@@ -90,8 +93,8 @@ model CategoriesBlog {
 }
 
 model ResetPassword {
-    id         String   @id @default(uuid())
-    customer   Customer @relation(fields: [customerId], references: [id])
-    customerId String   @unique
-    create_at  DateTime @default(now())
+    id        String   @id @default(uuid())
+    profile   Profile  @relation(fields: [profileId], references: [id])
+    profileId String   @unique
+    create_at DateTime @default(now())
 }
