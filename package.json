@@ -37,7 +37,7 @@
         "jsonwebtoken": "^9.0.0",
         "nodemon": "^2.0.20",
         "prisma": "^4.9.0",
-        "tslog": "^4.7.1",
+        "tslog": "^3.3.2",
         "uuid": "^9.0.0",
         "yamljs": "^0.3.0"
     }
