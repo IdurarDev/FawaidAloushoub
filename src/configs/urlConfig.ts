@@ -9,5 +9,6 @@ export const urlConfig = {
     blogUrl: `${process.env.URL_ENTRY}/blog`,
     articleUrl: `${process.env.URL_ENTRY}/articles`,
     planteUrl: `${process.env.URL_ENTRY}/plantes`,
+    profileUrl: `${process.env.URL_ENTRY}/profile`,
     redirectUrl: PROD ? 'https://hamid.berkaine.com' : 'http://localhost:3000'
 }
