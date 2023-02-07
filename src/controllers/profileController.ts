@@ -20,7 +20,7 @@ export default class ProfileController {
         const { email, name, bio, plante, articles, blog, blogId } = req.body
 
         newProfile.profile
-            .create({ email, name, bio, plante, articles, blog, blogId })
+            .create({ data: { email, name, bio, plante, articles, blog, blogId } })
             .then((profile) => {
                 res.status(200).json({ profile })
             })
