@@ -11,6 +11,7 @@ import BlogHomeController from './controllers/blogHomeController';
 import HomePageController from './controllers/homePageController';
 import ArticleHomeController from './controllers/articleHomeController';
 import PlanteHomeController from './controllers/planteHomeController';
+import ProfileController from './controllers/profileController';
 
 env.config()
 
@@ -27,6 +28,7 @@ class Server {
     private homePageController: HomePageController;
     private articleHomeController: ArticleHomeController;
     private planteHomeController: PlanteHomeController;
+    private profileController: ProfileController;
 
     constructor() {
         this.app = express();
@@ -78,12 +80,14 @@ class Server {
         this.articleHomeController = new ArticleHomeController(this.logger);
         this.blogHomeController = new BlogHomeController(this.logger);
         this.planteHomeController = new PlanteHomeController(this.logger);
+        this.profileController = new ProfileController(this.logger);
 
         // connect to my all crontrollers routers attributes
         this.app.use(urlConfig.homePageUrl, this.homePageController.router);
         this.app.use(urlConfig.planteUrl, this.planteHomeController.router);
         this.app.use(urlConfig.articleUrl, this.articleHomeController.router);
         this.app.use(urlConfig.blogUrl, this.blogHomeController.router);
+        this.app.use(urlConfig.profileUrl, this.profileHomeController.router);
 
     }
 
