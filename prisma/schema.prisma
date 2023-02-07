@@ -2,88 +2,99 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model Customer {
-    id                  String              @id @default(uuid())
-    email               String              @unique
-    name                String?
-    plante              Plante[]
-    articles            Article[]
-    profile             Profile?
-    reset_password      ResetPassword?
+    id   String  @id @default(uuid())
+    name String?
 }
 
 model Profile {
-    id                  String              @id @default(uuid())
-    bio                 String
-    customer            Customer            @relation(fields: [customerId], references: [id])
-    customerId          String              @unique
+    id             String         @id @default(uuid())
+    email          String         @unique
+    name           String?
+    bio            String
+    plante         Plante[]
+    articles       Article[]
+    blog           Blog[]
+    blogId         String
+    reset_password ResetPassword?
 }
 
 model Plante {
-    id                  String              @id @default(uuid())
-    title               String              @unique
-    author              Customer            @relation(fields: [authorId], references: [id])
-    authorId            String
-    categoriesPlante    CategoryPlante[]            
-    description         String?
-    utilisation         String?
-    difficultyLevel     String?
-    create_at           DateTime            @default(now())
-    updated_at          DateTime            @updatedAt
+    id               String           @id @default(uuid())
+    title            String           @unique
+    body             String
+    author           Profile          @relation(fields: [authorId], references: [id])
+    authorId         String
+    categoriesPlante CategoryPlante[]
+    utilisation      String?
+    difficultyLevel  String?
+    create_at        DateTime         @default(now())
+    updated_at       DateTime         @updatedAt
 }
 
 model CategoryPlante {
-    id                  String              @id @default(uuid())
-    name                String
-    category            Plante?             @relation(fields: [categoryId], references: [id]) 
-    categoryId          String          
+    id         String  @id @default(uuid())
+    name       String
+    category   Plante? @relation(fields: [categoryId], references: [id])
+    categoryId String
 }
 
 model Article {
-    id                  String              @id @default(uuid())
-    title               String      
-    published           Boolean             @default(false)
-    author              Customer            @relation(fields: [authorId], references: [id])
-    authorId            String
-    create_at           DateTime            @default(now())
-    updated_at          DateTime            @updatedAt
+    id         String    @id @default(uuid())
+    title      String
+    body       String
+    published  Boolean   @default(false)
+    comments   Comment[]
+    author     Profile   @relation(fields: [authorId], references: [id])
+    authorId   String
+    create_at  DateTime  @default(now())
+    updated_at DateTime  @updatedAt
 }
 
 model Blog {
-    id                  String              @id @default(uuid())
-    name                String              @unique
-    create_at           DateTime            @default(now())
-    updated_at          DateTime            @updatedAt
+    id         String    @id @default(uuid())
+    name       String    @unique
+    create_at  DateTime  @default(now())
+    updated_at DateTime  @updatedAt
+    comments   Comment[]
+    Profile    Profile   @relation(fields: [profileId], references: [id])
+    profileId  String
+}
 
+model Comment {
+    id        String  @id @default(uuid())
+    article   Article @relation(fields: [articleId], references: [id])
+    articleId String
+    blog      Blog    @relation(fields: [blogId], references: [id])
+    blogId    String
+    comment   String
 }
 
 model CategoriesArticle {
-    id                  String              @id @default(uuid())
-    name                String              @unique
-    create_at           DateTime            @default(now())
-    updated_at          DateTime            @updatedAt
+    id         String   @id @default(uuid())
+    name       String   @unique
+    create_at  DateTime @default(now())
+    updated_at DateTime @updatedAt
 }
 
 model CategoriesBlog {
-    id                  String              @id @default(uuid())
-    name                String              @unique
-    create_at           DateTime            @default(now())
-    updated_at          DateTime            @updatedAt
+    id         String   @id @default(uuid())
+    name       String   @unique
+    create_at  DateTime @default(now())
+    updated_at DateTime @updatedAt
 }
 
 model ResetPassword {
-    id                  String              @id @default(uuid())
-    customer            Customer            @relation(fields: [customerId], references: [id])
-    customerId          String              @unique
-    create_at           DateTime            @default(now())
+    id        String   @id @default(uuid())
+    profile   Profile  @relation(fields: [profileId], references: [id])
+    profileId String   @unique
+    create_at DateTime @default(now())
 }
-
-
