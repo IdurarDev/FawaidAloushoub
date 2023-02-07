@@ -87,7 +87,7 @@ class Server {
         this.app.use(urlConfig.planteUrl, this.planteHomeController.router);
         this.app.use(urlConfig.articleUrl, this.articleHomeController.router);
         this.app.use(urlConfig.blogUrl, this.blogHomeController.router);
-        this.app.use(urlConfig.profileUrl, this.profileHomeController.router);
+        this.app.use(urlConfig.profileUrl, this.profileController.router);
 
     }
 
