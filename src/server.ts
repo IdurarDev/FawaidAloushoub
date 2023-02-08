@@ -71,9 +71,9 @@ class Server {
      * routes app config
      */
     public routesApp = async () => {
+        await prisma.$connect();
         this.logger.info('Routes app started...');
 
-        await prisma.$connect();
 
         // instantiate my controller app
         this.homePageController = new HomePageController(this.logger);
@@ -81,6 +81,10 @@ class Server {
         this.blogHomeController = new BlogHomeController(this.logger);
         this.planteHomeController = new PlanteHomeController(this.logger);
         this.profileController = new ProfileController(this.logger);
+
+        this.app.get('/', (req, res) =>
+            res.status(301).redirect(urlConfig.redirectUrl),
+        );
 
         // connect to my all crontrollers routers attributes
         this.app.use(urlConfig.homePageUrl, this.homePageController.router);
