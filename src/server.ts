@@ -82,7 +82,7 @@ class Server {
         this.planteHomeController = new PlanteHomeController(this.logger);
         this.profileController = new ProfileController(this.logger);
 
-        this.app.get('/', (req, res) =>
+        this.app.get('/docs-api', (req, res) =>
             res.status(301).redirect(urlConfig.redirectUrl),
         );
 
