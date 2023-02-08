@@ -15,7 +15,7 @@ export default class ProfileController {
     }
 
     getAll = async (req: Request, res: Response) => {
-        this.logger.info('#getAll() called in article home page')
+        this.logger.info('#getAll() called in profile home page')
         return res.send('Marhaban bikoum to the profile page')
     }
 
