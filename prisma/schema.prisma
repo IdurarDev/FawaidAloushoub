@@ -59,6 +59,7 @@ model Article {
     updated_at DateTime  @updatedAt
 }
 
+// en 3eme arg dans @relation ' onDelete: Cascade ' = si on supprime le profile on supprime tout ce qui a en rapport avec lui
 model Blog {
     id         String    @id @default(uuid())
     name       String    @unique
