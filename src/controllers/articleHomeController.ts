@@ -26,7 +26,7 @@ export default class ArticleHomeController {
 
     routesApp = () => {
         this.router.get('/article', this.getAll)
-        this.router.post('/article', this.createOne)
+        this.router.post('/', this.createOne)
         this.router.get('/:id', this.getOne)
         this.router.put('/:id', this.updateOne)
         this.router.delete('/:id', this.deleteOne)
