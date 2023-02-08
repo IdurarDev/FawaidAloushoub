@@ -14,6 +14,11 @@ export default class ProfileController {
         this.routerApp();
     }
 
+    getAll = async (req: Request, res: Response) => {
+        this.logger.info('#getAll() called in article home page')
+        return res.send('Marhaban bikoum to the profile page')
+    }
+
     createProfile = async (req: Request, res: Response) => {
         this.logger.info(`#createProfile() in profileCustomer start!`)
 
@@ -31,8 +36,7 @@ export default class ProfileController {
     }
 
     routerApp = () => {
-        this.router.get('/');
-        this.router.get('/profile');
+        this.router.get('/profile', this.getAll);
 
         this.router.post('/', this.createProfile);
         this.router.get('/:id');
