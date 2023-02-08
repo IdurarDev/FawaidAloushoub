@@ -25,7 +25,7 @@ export default class BlogHomeController {
     deleteOne = async () => { }
 
     routesApp = () => {
-        this.router.get('/', this.getAll)
+        this.router.get('/blog', this.getAll)
         this.router.post('/', this.createOne)
         this.router.get('/:id', this.getOne)
         this.router.put('/:id', this.updateOne)
